@@ -1,7 +1,8 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="AppThemeLight" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowFullscreen">false</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:textColorPrimary">#177CA2</item>
@@ -17,6 +18,7 @@
     <style name="AppThemeDark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowActionBar">false</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
         <item name="android:statusBarColor">?android:attr/colorPrimaryDark</item>
         <item name="android:windowNoTitle">true</item>
         <item name="colorPrimary">#262626</item>

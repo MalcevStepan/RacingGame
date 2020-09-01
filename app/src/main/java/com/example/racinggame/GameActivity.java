@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -40,16 +41,35 @@ public class GameActivity extends AppCompatActivity implements OnGameActionListe
 	private static final int MAX_DIFF_QUESTIONS = 6;
 
 	@Override
+	protected void onResume() {
+		super.onResume();
+		final int flags = (!ui_mode && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ? (View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+					| View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+					| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+					| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+					| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY) :
+				(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+					| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+					| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+					| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+
+		getWindow().getDecorView().setSystemUiVisibility(flags);
+
+		final View decorView = getWindow().getDecorView();
+		decorView.setOnSystemUiVisibilityChangeListener(visibility -> decorView.setSystemUiVisibility(flags));
+	}
+
+	private boolean ui_mode;
+
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		final SharedPreferences sharedPreferences = getSharedPreferences(GameData.APP_PREFERENCES, Context.MODE_PRIVATE);
-		final boolean ui_mode = sharedPreferences.getBoolean(GameData.APP_PREFERENCES_UI_MODE, false),
+		final boolean ui_mode = this.ui_mode = sharedPreferences.getBoolean(GameData.APP_PREFERENCES_UI_MODE, false),
 				user_color = sharedPreferences.getBoolean(GameData.APP_PREFERENCES_USER_COLOR, false);
 		numerals = sharedPreferences.getBoolean(GameData.APP_PREFERENCES_NUMERALS, false);
 
-		if (ui_mode)
-			setTheme(R.style.AppThemeDark);
-		else setTheme(R.style.AppThemeLight);
+		setTheme(ui_mode ? R.style.AppThemeDark : R.style.AppThemeLight);
 
 		binding = ActivityGameBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
@@ -224,6 +244,24 @@ public class GameActivity extends AppCompatActivity implements OnGameActionListe
 		binding.sevenButton.setText(String.valueOf(GameData.easternArabicNumerals[7]));
 		binding.eightButton.setText(String.valueOf(GameData.easternArabicNumerals[8]));
 		binding.nineButton.setText(String.valueOf(GameData.easternArabicNumerals[9]));
+	}
+
+	@SuppressLint("NewApi")
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		super.onWindowFocusChanged(hasFocus);
+		if (hasFocus) {
+			final int flags = (ui_mode && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ? View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+					| View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+					| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+					| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+					| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY :
+					View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+							| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+							| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+							| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+			getWindow().getDecorView().setSystemUiVisibility(flags);
+		}
 	}
 
 	private void setNewQuestion(Resources res, int operation, int operation_level, Drawable checkImage, boolean isArabicNumerals) {
