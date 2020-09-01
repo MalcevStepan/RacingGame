@@ -196,7 +196,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, OnV
 						userCar.setImpulseAmplitude(pulseAmplitude);
 						isFirstDraw = false;
 					}
-					canvas.drawColor(0xff363636);
+					canvas.drawColor(bg_color);
 					drawTrack(canvas, track);
 					double deltaTime = timer.getDeltaTime();
 					computerCar.move(canvas, computerYPos, computerXPos, track[computerYPos[0]][computerXPos[0]]);
