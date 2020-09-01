@@ -103,9 +103,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, OnV
 	}
 
 	public final void setUIMode(boolean ui_mode) {
-		if (ui_mode)
-			bg_color = getResources().getColor(R.color.colorPrimaryDark);
-		else bg_color = getResources().getColor(R.color.colorPrimaryLight);
+		bg_color = getResources().getColor(ui_mode ? R.color.colorPrimaryDark : R.color.colorPrimaryLight);
 	}
 
 	public final void setTrack(RoadType[][] track) {
@@ -142,7 +140,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, OnV
 		referenceSpeed = refSpeed;
 	}
 
-	public final void setSpeedLevelCoef(float speedLevelCoef){
+	public final void setSpeedLevelCoef(float speedLevelCoef) {
 		this.speedLevelCoef = speedLevelCoef;
 	}
 
@@ -198,7 +196,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, OnV
 						userCar.setImpulseAmplitude(pulseAmplitude);
 						isFirstDraw = false;
 					}
-					canvas.drawColor(bg_color);
+					canvas.drawColor(0xff363636);
 					drawTrack(canvas, track);
 					double deltaTime = timer.getDeltaTime();
 					computerCar.move(canvas, computerYPos, computerXPos, track[computerYPos[0]][computerXPos[0]]);
