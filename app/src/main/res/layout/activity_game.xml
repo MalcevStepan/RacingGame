@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GameActivity">
+
+    <ImageView
+        android:id="@+id/velocity_scale"
+        android:layout_width="match_parent"
+        android:layout_height="19dp"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/velocity_scale" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/app_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/velocity_scale"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="?android:attr/colorPrimary">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/settings_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:backgroundTint="?android:attr/colorPrimary"
+                android:src="@drawable/settings_arrow" />
+
+            <ImageButton
+                android:id="@+id/update_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/settings_button"
+                android:backgroundTint="?android:attr/colorPrimary"
+                android:src="@drawable/update" />
+
+            <TextView
+                android:id="@+id/time_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="00:00"
+                android:textColor="?android:attr/textColor"
+                android:textSize="35sp" />
+
+            <FrameLayout
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/next_button"
+                android:layout_toEndOf="@id/time_text">
+
+                <TextView
+                    android:id="@+id/laps_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|top"
+                    android:text="4"
+                    android:textColor="?android:attr/textColor"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/laps_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/laps"
+                    android:textColor="?android:attr/textColor"
+                    android:textSize="15sp" />
+            </FrameLayout>
+
+            <ImageButton
+                android:id="@+id/next_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="?android:attr/colorPrimary"
+                android:clickable="false"
+                android:focusable="false"
+                android:src="@drawable/forward_arrow" />
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/question_bar"
+        android:layout_below="@id/app_toolbar"
+        android:layout_centerHorizontal="true">
+
+        <com.example.racinggame.GameView
+            android:id="@+id/game_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp" />
+
+        <TextView
+            android:id="@+id/finish_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/correct_green_color"
+            android:textSize="90sp"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/traffic_light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/red_traffic_light" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/question_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/num_pad"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="invisible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/question"
+            android:layout_centerVertical="true"
+            android:src="@drawable/question_bar" />
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="55dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="?android:attr/colorPrimary"/>
+
+        <TextView
+            android:id="@+id/question_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="15dp"
+            android:textSize="30sp" />
+
+        <FrameLayout
+            android:id="@+id/answer_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:src="@drawable/answer_bar" />
+
+            <ImageButton
+                android:id="@+id/check_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="5dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/check_image" />
+
+            <TextView
+                android:id="@+id/answer_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="20dp"
+                android:maxLength="5"
+                android:textSize="30sp" />
+        </FrameLayout>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/countdown_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/num_pad"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:text="3"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="30sp" />
+
+    <LinearLayout
+        android:id="@+id/num_pad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:weightSum="3">
+
+            <Button
+                android:id="@+id/one_button"
+                style="@style/NumpadStyle"
+                android:layout_weight="1"
+                android:onClick="onClick"
+                android:text="1" />
+
+            <Button
+                android:id="@+id/two_button"
+                style="@style/NumpadStyle"
+                android:layout_weight="1"
+                android:onClick="onClick"
+                android:text="2" />
+
+            <Button
+                android:id="@+id/three_button"
+                style="@style/NumpadStyle"
+                android:layout_weight="1"
+                android:onClick="onClick"
+                android:text="3" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:weightSum="3">
+
+            <Button
+                android:id="@+id/four_button"
+                style="@style/NumpadStyle"
+                android:layout_weight="1"
+                android:onClick="onClick"
+                android:text="4" />
+
+            <Button
+                android:id="@+id/five_button"
+                style="@style/NumpadStyle"
+                android:layout_weight="1"
+                android:onClick="onClick"
+                android:text="5" />
+
+            <Button
+                android:id="@+id/six_button"
+                style="@style/NumpadStyle"
+                android:layout_weight="1"
+                android:onClick="onClick"
+                android:text="6" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:weightSum="3">
+
+            <Button
+                android:id="@+id/seven_button"
+                style="@style/NumpadStyle"
+                android:layout_weight="1"
+                android:onClick="onClick"
+                android:text="7" />
+
+            <Button
+                android:id="@+id/eight_button"
+                style="@style/NumpadStyle"
+                android:layout_weight="1"
+                android:onClick="onClick"
+                android:text="8" />
+
+            <Button
+                android:id="@+id/nine_button"
+                style="@style/NumpadStyle"
+                android:layout_weight="1"
+                android:onClick="onClick"
+                android:text="9" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:weightSum="3">
+
+            <LinearLayout
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/minus_button"
+                    style="@style/NumpadStyle"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="-"
+                    tools:ignore="NestedWeights" />
+
+                <Button
+                    android:id="@+id/point_button"
+                    style="@style/NumpadStyle"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="." />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/zero_button"
+                style="@style/NumpadStyle"
+                android:layout_weight="1"
+                android:textSize="25sp"
+                android:onClick="onClick"
+                android:text="0" />
+
+            <ImageButton
+                android:id="@+id/remove_button"
+                style="@style/NumpadStyle"
+                android:layout_weight="1"
+                android:onClick="onClick"
+                android:src="@drawable/remove_dark" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

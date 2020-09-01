@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#262626</color>
+    <color name="colorPrimaryDark">#363636</color>
+    <color name="colorPrimaryLight">#D7D7D7</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="question_background">#595656</color>
+    <color name="answer_background">#8D8D8D</color>
+    <color name="text_color">#707070</color>
+    <color name="question_bar_text_color">#CCCCCC</color>
+    <color name="correct_green_color">#0EEB06</color>
+    <color name="wrong_red_color">#FF2121</color>
+    <color name="default_question_bar_color">#EDEDED</color>
+    <color name="spinner_background_color">#C5C4C4</color>
+    <color name="toolbar_light_color">#627380</color>
+    <color name="text_color_light">#177CA2</color>
+    <color name="speed_level_one_color">#B41CED</color>
+    <color name="speed_level_two_color">#8F4AE8</color>
+    <color name="speed_level_three_color">#6A78E4</color>
+    <color name="speed_level_four_color">#44A7E0</color>
+    <color name="speed_level_five_color">#06EBEB</color>
+</resources>

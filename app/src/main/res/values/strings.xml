@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Racing Game</string>
+    <string name="win_text">You won</string>
+    <string name="lost_text">You lose</string>
+    <string name="laps">laps</string>
+    <string name="circle">circle</string>
+    <string name="ui_mode">UI Mode</string>
+    <string name="numerals">Numerals</string>
+    <string name="user_color">User color</string>
+    <string name="operation">Operation</string>
+    <string name="operation_level">Operation Level</string>
+    <string name="speed_level">Speed Level</string>
+    <string name="reference_speed">Reference Speed</string>
+    <string name="speed_level_coef">Speed Level coef.</string>
+    <string name="user_constant_speed">User constant speed</string>
+    <string name="pulse_amplitude">Pulse amplitude</string>
+    <string name="day">day</string>
+    <string-array name="operations">
+        <item>Addition</item>
+        <item>Subtraction</item>
+        <item>Multiplication</item>
+        <item>Division</item>
+    </string-array>
+    <string-array name="speed_levels">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+</resources>

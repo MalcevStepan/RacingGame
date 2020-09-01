@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ResultActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/app_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="?android:attr/colorPrimary">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/settings_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:backgroundTint="?android:attr/colorPrimary"
+                android:src="@drawable/settings_arrow" />
+
+            <ImageButton
+                android:id="@+id/update_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/settings_button"
+                android:backgroundTint="?android:attr/colorPrimary"
+                android:src="@drawable/update" />
+
+            <ImageButton
+                android:id="@+id/next_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="?android:attr/colorPrimary"
+                android:clickable="false"
+                android:focusable="false"
+                android:src="@drawable/forward_arrow" />
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/correct_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="5"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/correct_green_color"
+        android:textSize="150sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/correct_text"
+        android:id="@+id/green_view"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/green_accept"/>
+
+    <TextView
+        android:id="@+id/wrong_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/green_view"
+        android:layout_centerHorizontal="true"
+        android:text="4"
+        android:textColor="@color/wrong_red_color"
+        android:textSize="150sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/wrong_text"
+        android:id="@+id/red_view"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/red_cross"/>
+
+</RelativeLayout>
