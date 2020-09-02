@@ -44,14 +44,14 @@ public class GameActivity extends AppCompatActivity implements OnGameActionListe
 	protected void onResume() {
 		super.onResume();
 		final int flags = (!ui_mode && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ? (View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-					| View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-					| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-					| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-					| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY) :
+				| View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+				| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+				| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+				| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY) :
 				(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-					| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-					| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-					| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+						| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+						| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+						| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
 		getWindow().getDecorView().setSystemUiVisibility(flags);
 
@@ -251,15 +251,13 @@ public class GameActivity extends AppCompatActivity implements OnGameActionListe
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
 		if (hasFocus) {
-			final int flags = (ui_mode && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ? View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+			final int flags = (!ui_mode && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ? View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 					| View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 					| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-					| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-					| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY :
+					| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION :
 					View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-							| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-							| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-							| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+					| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+					| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
 			getWindow().getDecorView().setSystemUiVisibility(flags);
 		}
 	}
