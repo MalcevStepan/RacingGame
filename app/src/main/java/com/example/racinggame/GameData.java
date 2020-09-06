@@ -497,7 +497,7 @@ public final class GameData {
 				switch (operationLevel) {
 					case 1:
 						sum = rand(11, 19);
-						n1 = rand(10, sum);
+						n1 = rand(10, sum - 1);
 						n2 = sum - n1;
 						break;
 					case 2:

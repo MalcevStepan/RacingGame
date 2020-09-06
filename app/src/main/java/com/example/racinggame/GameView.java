@@ -4,11 +4,11 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,7 +28,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, OnV
 	private boolean isPurpleCar, isFirstDraw = true;
 	private Resources.Theme theme;
 	private float referenceSpeed, userSpeed, pulseAmplitude, speedLevelCoef;
-	private ImageView velocityScale;
 	private int bg_color;
 
 	public GameView(Context context, @Nullable AttributeSet attrs) {
@@ -73,7 +72,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, OnV
 		userCar = new Car(userCarLeftBitmap, userCarRightBitmap, userCarUpBitmap, userCarDownBitmap, w, h, this, track, false);
 		computerCar = new Car(computerCarLeftBitmap, computerCarRightBitmap, computerCarUpBitmap, computerCarDownBitmap, w, h, this, track, true);
 		userCar.setCarDefaultSpeed(userSpeed);
-		userCar.setCarVelocityScale(velocityScale);
 		computerCar.setCarDefaultSpeed(referenceSpeed / speedLevelCoef);
 	}
 
@@ -103,7 +101,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, OnV
 	}
 
 	public final void setUIMode(boolean ui_mode) {
-		bg_color = getResources().getColor(ui_mode ? R.color.colorPrimaryDark : R.color.colorPrimaryLight);
+		bg_color = ui_mode ? Color.parseColor("#393939") : getResources().getColor(R.color.colorPrimaryDarkLight);
 	}
 
 	public final void setTrack(RoadType[][] track) {
@@ -130,10 +128,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, OnV
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public final void setCarVelocityScale(ImageView velocityScale) {
-		this.velocityScale = velocityScale;
 	}
 
 	public final void setReferenceSpeed(float refSpeed) {

@@ -5,15 +5,16 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:textColorPrimary">#177CA2</item>
+        <item name="android:textColorPrimary">@color/text_color_light</item>
         <item name="android:fitsSystemWindows">true</item>
-        <item name="android:textColor">#627380</item>
-        <item name="colorPrimary">#CCCCCC</item>
-        <item name="colorPrimaryDark">#D7D7D7</item>
-        <item name="android:statusBarColor">?android:attr/colorPrimaryDark</item>
-        <item name="colorAccent">#627380</item>
-        <item name="android:backgroundTint">?android:attr/colorPrimaryDark</item>
-        <item name="colorButtonNormal">#BFBDBD</item>
+        <item name="android:textColor">@color/colorAccentLight</item>
+        <item name="colorPrimary">@color/colorPrimaryLight</item>
+        <item name="android:colorBackground">@color/colorPrimaryDarkLight</item>
+        <item name="android:windowBackground">@color/colorPrimaryDarkLight</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkLight</item>
+        <item name="colorAccent">@color/colorAccentLight</item>
+        <item name="android:backgroundTint">?android:attr/colorBackground</item>
+        <item name="android:colorButtonNormal">@color/colorButtonNormalLight</item>
     </style>
 
     <style name="AppThemeDark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -22,15 +23,17 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
         <item name="android:statusBarColor">?android:attr/colorPrimaryDark</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="colorPrimary">#262626</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
         <item name="android:fitsSystemWindows">true</item>
+        <item name="android:windowBackground">@color/colorPrimaryDark</item>
+        <item name="android:colorBackground">@color/colorPrimaryDark</item>
         <item name="android:textSize">20sp</item>
-        <item name="colorPrimaryDark">#363636</item>
-        <item name="colorAccent">#8D8D8D</item>
-        <item name="colorButtonNormal">#627380</item>
-        <item name="android:backgroundTint">?android:attr/colorPrimaryDark</item>
-        <item name="android:textColorPrimary">#EDEDED</item>
-        <item name="android:textColor">#CCCCCC</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccentDark</item>
+        <item name="android:colorButtonNormal">@color/colorAccentLight</item>
+        <item name="android:backgroundTint">?android:attr/colorBackground</item>
+        <item name="android:textColorPrimary">@color/default_question_bar_color</item>
+        <item name="android:textColor">@color/colorPrimaryLight</item>
     </style>
 
     <style name="NumpadStyle" parent="@style/Widget.AppCompat.Button">

@@ -35,13 +35,11 @@ public class SpeedActivity extends AppCompatActivity {
 		final Resources res = getResources();
 
 		if (!ui_mode) {
-			int toolbarColor = res.getColor(R.color.question_bar_text_color);
 			int color = res.getColor(R.color.toolbar_light_color);
 			binding.nextButton.setColorFilter(color);
 			binding.updateButton.setColorFilter(color);
 			binding.settingsButton.setColorFilter(color);
-			binding.appToolbar.setBackgroundColor(toolbarColor);
-		} else binding.appToolbar.setBackgroundColor(res.getColor(R.color.colorPrimary));
+		}
 
 		setContentView(binding.getRoot());
 

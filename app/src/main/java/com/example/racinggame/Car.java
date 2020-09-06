@@ -4,7 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Rect;
-import android.widget.ImageView;
+
+import java.util.Arrays;
 
 public class Car {
 
@@ -15,11 +16,9 @@ public class Car {
 	private double angleV, velocity, defaultVelocity, impulsePercent = 0, radius;
 	private Bitmap carLeft, carRight, carUp, carDown;
 	private boolean isRunning = false, isComputerCar;
-	private int marginStartPx, marginTopPx, viewWidth, velocityScaleDefValue, velocityScaleRemaining;
+	private int marginStartPx, marginTopPx, viewWidth;
 	private static final float impulseAmplitudeDefValue = 0.5f;
-	private float impulseAmplitude;
-	private final double[] lognormalDistr = GameData.lognormalDistr;
-	private ImageView velocityScale;
+	private final double[] lognormalDistr = Arrays.copyOf(GameData.lognormalDistr, GameData.lognormalDistr.length);
 	private OnViewActionListener viewActionListener;
 	private RoadType[][] track;
 
@@ -53,18 +52,8 @@ public class Car {
 		this.defaultVelocity = defaultVelocity;
 	}
 
-	public final void setCarVelocityScale(ImageView velocityScale) {
-		this.velocityScale = velocityScale;
-	}
-
-	private void setVelocityScaleValues() {
-		velocityScaleDefValue = (int) (viewWidth * 0.2);
-		velocityScaleRemaining = (int) (viewWidth * 0.8);
-	}
-
 	public final void setViewWidth(int width) {
 		viewWidth = width;
-		setVelocityScaleValues();
 	}
 
 	public final void setCarVelocity(double deltaTime) {
@@ -76,25 +65,21 @@ public class Car {
 	}
 
 	public final void setImpulseAmplitude(float amplitude) {
-		impulseAmplitude = amplitude;
-		float times = impulseAmplitude / impulseAmplitudeDefValue;
+		float times = amplitude / impulseAmplitudeDefValue;
 		for (int i = 0; i < lognormalDistr.length; i++)
 			lognormalDistr[i] *= times;
 	}
 
 	public final void setCarRunning(boolean isRunning) {
 		this.isRunning = isRunning;
-		if (velocityScale != null)
-			velocityScale.getLayoutParams().width = (int) (viewWidth * 0.2);
 	}
 
 	private synchronized void increaseImpulsePercent(double percent) {
 		impulsePercent += percent;
-		velocityScale.getLayoutParams().width = (int) (velocityScaleDefValue + velocityScaleRemaining * (impulsePercent / impulseAmplitude));
 	}
 
 	private synchronized void decreaseImpulsePercent(double percent) {
-			impulsePercent -= percent;
+		impulsePercent -= percent;
 	}
 
 	public final void increaseCarSpeed() {

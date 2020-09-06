@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +32,7 @@ public class GameActivity extends AppCompatActivity implements OnGameActionListe
 	private static final int QUESTION_ANIMATION_DURATION = 400;
 	private int lapsCount = 4, computerLapsCount = 4;
 	private Drawable[] lights;
+	private int[] countdownTextColors;
 	private TextView answerText;
 	private float correctAnswer;
 	private int correctAnswerCount, wrongAnswerCount;
@@ -84,9 +84,7 @@ public class GameActivity extends AppCompatActivity implements OnGameActionListe
 			binding.updateButton.setColorFilter(color);
 			binding.settingsButton.setColorFilter(color);
 			binding.removeButton.setImageDrawable(ResourcesCompat.getDrawable(res, R.drawable.remove_light, theme));
-			binding.appToolbar.setBackgroundColor(textColor);
-		} else
-			binding.appToolbar.setBackgroundColor(res.getColor(R.color.colorPrimary));
+		}
 
 		binding.questionText.setTextColor(textColor);
 		binding.answerText.setTextColor(textColor);
@@ -105,7 +103,7 @@ public class GameActivity extends AppCompatActivity implements OnGameActionListe
 
 		final Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Thin.ttf"),
 				light_font = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
-		binding.countdownText.setTypeface(font);
+		binding.countdownText.setTypeface(light_font);
 		binding.timeText.setTypeface(font);
 		binding.questionText.setTypeface(light_font);
 		binding.answerText.setTypeface(light_font);
@@ -116,14 +114,17 @@ public class GameActivity extends AppCompatActivity implements OnGameActionListe
 		gameView.setTrack(GameData.tracks[operation + (operation_level >= GameData.levelCounts[operation].getCount() / 2 ? 1 : 0)]);
 		gameView.setListener(this);
 
+		binding.velocityScale.setBgColor(ui_mode);
+
 		lights = new Drawable[]{
 				ResourcesCompat.getDrawable(res, R.drawable.green_traffic_light, theme),
 				ResourcesCompat.getDrawable(res, R.drawable.orange_traffic_light, theme),
 		};
 
-		binding.velocityScale.setScaleType(ImageView.ScaleType.CENTER_CROP);
-		binding.velocityScale.getLayoutParams().width = 0;
-		gameView.setCarVelocityScale(binding.velocityScale);
+		countdownTextColors = new int[]{
+				res.getColor(R.color.green_countdown_text_color),
+				res.getColor(R.color.orange_countdown_text_color)
+		};
 
 		gameView.setUIMode(ui_mode);
 
@@ -180,6 +181,7 @@ public class GameActivity extends AppCompatActivity implements OnGameActionListe
 			if (len > 1 || (len == 1 && !answer.equals("-"))) {
 				if (Float.parseFloat(answer) == correctAnswer) {
 					gameView.giveImpulse();
+					binding.velocityScale.animateScale();
 					binding.checkButton.setClickable(false);
 					binding.answerText.setTextColor(res.getColor(R.color.correct_green_color));
 					setNewQuestion(res, operation, operation_level, correctAnswerDrawable, numerals);
@@ -256,8 +258,8 @@ public class GameActivity extends AppCompatActivity implements OnGameActionListe
 					| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 					| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION :
 					View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-					| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-					| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+							| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+							| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
 			getWindow().getDecorView().setSystemUiVisibility(flags);
 		}
 	}
@@ -474,6 +476,7 @@ public class GameActivity extends AppCompatActivity implements OnGameActionListe
 					runOnUiThread(() -> {
 						if (binding != null) {
 							binding.trafficLight.setImageDrawable(lights[finalCountdownSec - 1]);
+							binding.countdownText.setTextColor(countdownTextColors[finalCountdownSec - 1]);
 							if (isArabicNumerals)
 								binding.countdownText.setText(converter.convertToEstArabic(finalCountdownSec));
 							else binding.countdownText.setText(String.valueOf(finalCountdownSec));

@@ -8,6 +8,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/app_toolbar"
         android:layout_width="match_parent"
+        style="@style/Widget.MaterialComponents.Toolbar.Primary"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:backgroundTint="?android:attr/colorPrimary">
