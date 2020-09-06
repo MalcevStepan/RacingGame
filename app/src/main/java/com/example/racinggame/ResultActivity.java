@@ -16,24 +16,20 @@ public class ResultActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		final ActivityResultBinding binding = ActivityResultBinding.inflate(getLayoutInflater());
 
 		final Intent data = getIntent();
 		final boolean numerals = data.getBooleanExtra(GameData.APP_PREFERENCES_NUMERALS, false),
 				ui_mode = data.getBooleanExtra(GameData.APP_PREFERENCES_UI_MODE, false);
 
-		if (ui_mode)
-			setTheme(R.style.AppThemeDark);
-		else setTheme(R.style.AppThemeLight);
+		setTheme(ui_mode ? R.style.AppThemeDark : R.style.AppThemeLight);
 
-		final Resources res = getResources();
+		final ActivityResultBinding binding = ActivityResultBinding.inflate(getLayoutInflater());
 
 		if (!ui_mode) {
-			int color = res.getColor(R.color.toolbar_light_color);
-			binding.nextButton.setColorFilter(color);
+			int color = getResources().getColor(R.color.toolbar_light_color);
 			binding.updateButton.setColorFilter(color);
 			binding.settingsButton.setColorFilter(color);
-		} 
+		}
 
 		setContentView(binding.getRoot());
 
