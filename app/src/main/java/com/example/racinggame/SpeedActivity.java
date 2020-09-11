@@ -17,7 +17,6 @@ public class SpeedActivity extends AppCompatActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		final ActivitySpeedBinding binding = ActivitySpeedBinding.inflate(getLayoutInflater());
 		super.onCreate(savedInstanceState);
 
 		final SharedPreferences prefs = getSharedPreferences(GameData.APP_PREFERENCES, MODE_PRIVATE);
@@ -34,13 +33,9 @@ public class SpeedActivity extends AppCompatActivity {
 				operation_level = prefs.getInt(GameData.APP_PREFERENCES_OPERATION_LEVEL, 1);
 		final Resources res = getResources();
 
-		if (!ui_mode) {
-			int color = res.getColor(R.color.toolbar_light_color);
-			binding.nextButton.setColorFilter(color);
-			binding.updateButton.setColorFilter(color);
-			binding.settingsButton.setColorFilter(color);
-		}
+		final ActivitySpeedBinding binding = ActivitySpeedBinding.inflate(getLayoutInflater());
 
+		setToolbarButtonsColor(ui_mode, res, binding);
 		setContentView(binding.getRoot());
 
 		binding.nextButton.setColorFilter(getResources().getColor(R.color.correct_green_color));
@@ -57,33 +52,46 @@ public class SpeedActivity extends AppCompatActivity {
 				binding.speedLevelCircle,
 				binding.speedLevelText);
 
-		binding.updateButton.setOnClickListener(view -> {
-			final Intent intent = new Intent(this, GameActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-			startActivity(intent);
-			finish();
-		});
+		binding.updateButton.setOnClickListener(view -> startGameActivity());
 
-		binding.settingsButton.setOnClickListener(view -> {
-			final Intent intent = new Intent(this, SettingsActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-			startActivity(intent);
-			finish();
-		});
+		binding.settingsButton.setOnClickListener(view -> startSettingsActivity());
 
 		binding.nextButton.setOnClickListener(view -> {
-			final SharedPreferences.Editor editor = prefs.edit();
-			editor.putInt(GameData.APP_PREFERENCES_SPEED_LEVEL, next_speed_level);
-			editor.putInt(GameData.APP_PREFERENCES_OPERATION_LEVEL, operation_level == GameData.levelCounts[operation].getCount() ? operation_level : operation_level + 1);
-			editor.apply();
-			final Intent intent = new Intent(this, GameActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-			startActivity(intent);
-			finish();
+			updateOperationLevel(prefs, next_speed_level, operation_level, operation);
+			startGameActivity();
 		});
+	}
+
+	private void updateOperationLevel(SharedPreferences prefs, int next_speed_level, int operation_level, int operation) {
+		final SharedPreferences.Editor editor = prefs.edit();
+		editor.putInt(GameData.APP_PREFERENCES_SPEED_LEVEL, next_speed_level);
+		editor.putInt(GameData.APP_PREFERENCES_OPERATION_LEVEL, operation_level == GameData.levelCounts[operation].getCount() ? operation_level : operation_level + 1);
+		editor.apply();
+	}
+
+	private void startSettingsActivity() {
+		final Intent intent = new Intent(this, SettingsActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		startActivity(intent);
+		finish();
+	}
+
+	private void setToolbarButtonsColor(boolean ui_mode, Resources res, ActivitySpeedBinding binding) {
+		if (!ui_mode) {
+			int color = res.getColor(R.color.toolbar_light_color);
+			binding.nextButton.setColorFilter(color);
+			binding.updateButton.setColorFilter(color);
+			binding.settingsButton.setColorFilter(color);
+		}
+	}
+
+	private void startGameActivity() {
+		final Intent intent = new Intent(this, GameActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		startActivity(intent);
+		finish();
 	}
 
 	private void setSpeedCircleImage(Resources res,

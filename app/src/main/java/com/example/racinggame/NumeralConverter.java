@@ -1,5 +1,7 @@
 package com.example.racinggame;
 
+// converter to Eastern Arabic numbers
+
 public class NumeralConverter {
 
 	public String convertToArabic(String easternArabic) {

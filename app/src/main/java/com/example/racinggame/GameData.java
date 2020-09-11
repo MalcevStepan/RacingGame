@@ -1,5 +1,7 @@
 package com.example.racinggame;
 
+import android.util.Log;
+
 public final class GameData {
 
 	public static final String APP_PREFERENCES = "settings",
@@ -22,32 +24,11 @@ public final class GameData {
 			'٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'
 	};
 
+
+	// look at res/drawable/turn_right_bottom.xml(direct.xml/direct_90.xml) to understand
 	public final static RoadType[][][] tracks = new RoadType[][][]{
 			new RoadType[][]{
 					{
-							RoadType.TURN_RIGHT_BOTTOM_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_FINISH_RIGHT, RoadType.TURN_LEFT_BOTTOM_DOWN
-					},
-					{
-							RoadType.TURN_RIGHT_TOP_UP, RoadType.DIRECT_LEFT, RoadType.TURN_LEFT_BOTTOM_LEFT, RoadType.TURN_RIGHT_BOTTOM_DOWN, RoadType.DIRECT_LEFT, RoadType.TURN_LEFT_TOP_LEFT
-					},
-					{
-							RoadType.TURN_RIGHT_BOTTOM_RIGHT, RoadType.DIRECT_RIGHT, RoadType.TURN_LEFT_TOP_UP, RoadType.DIRECT_90_DOWN, RoadType.TURN_RIGHT_BOTTOM_RIGHT, RoadType.TURN_LEFT_BOTTOM_DOWN
-					},
-					{
-							RoadType.DIRECT_90_UP, RoadType.TURN_RIGHT_BOTTOM_DOWN, RoadType.TURN_LEFT_BOTTOM_LEFT, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN
-					},
-					{
-							RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN
-					},
-					{
-							RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.TURN_RIGHT_TOP_RIGHT, RoadType.TURN_LEFT_TOP_UP, RoadType.DIRECT_90_DOWN
-					},
-					{
-							RoadType.TURN_RIGHT_TOP_UP, RoadType.TURN_LEFT_TOP_LEFT, RoadType.TURN_RIGHT_TOP_UP, RoadType.DIRECT_LEFT, RoadType.DIRECT_LEFT, RoadType.TURN_LEFT_TOP_LEFT
-					}
-			},
-			new RoadType[][]{
-					{
 							RoadType.TURN_RIGHT_BOTTOM_DOWN, RoadType.DIRECT_LEFT, RoadType.DIRECT_LEFT, RoadType.DIRECT_LEFT, RoadType.DIRECT_LEFT, RoadType.TURN_LEFT_BOTTOM_LEFT
 					},
 					{
@@ -64,58 +45,6 @@ public final class GameData {
 					},
 					{
 							RoadType.TURN_RIGHT_TOP_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_FINISH_RIGHT, RoadType.TURN_LEFT_TOP_UP
-					}
-			},
-			new RoadType[][]{
-					{
-							RoadType.TURN_RIGHT_BOTTOM_DOWN, RoadType.DIRECT_LEFT, RoadType.DIRECT_LEFT, RoadType.DIRECT_LEFT, RoadType.DIRECT_LEFT, RoadType.TURN_LEFT_BOTTOM_LEFT
-					},
-					{
-							RoadType.DIRECT_90_DOWN, RoadType.TURN_RIGHT_BOTTOM_RIGHT, RoadType.TURN_LEFT_BOTTOM_DOWN, RoadType.TURN_RIGHT_BOTTOM_RIGHT, RoadType.TURN_LEFT_BOTTOM_DOWN, RoadType.DIRECT_90_UP
-					},
-					{
-							RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP
-					},
-					{
-							RoadType.TURN_RIGHT_TOP_RIGHT, RoadType.TURN_LEFT_TOP_UP, RoadType.TURN_RIGHT_TOP_RIGHT, RoadType.TURN_LEFT_TOP_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP
-					},
-					{
-							RoadType.TURN_RIGHT_BOTTOM_DOWN, RoadType.TURN_LEFT_BOTTOM_LEFT, RoadType.TURN_RIGHT_BOTTOM_DOWN, RoadType.TURN_LEFT_BOTTOM_LEFT, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP
-					},
-					{
-							RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP
-					},
-					{
-							RoadType.DIRECT_90_DOWN, RoadType.TURN_RIGHT_TOP_UP, RoadType.TURN_LEFT_TOP_LEFT, RoadType.TURN_RIGHT_TOP_UP, RoadType.TURN_LEFT_TOP_LEFT, RoadType.DIRECT_90_UP
-					},
-					{
-							RoadType.TURN_RIGHT_TOP_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_FINISH_RIGHT, RoadType.TURN_LEFT_TOP_UP
-					}
-			},
-			new RoadType[][]{
-					{
-							RoadType.VOID, RoadType.TURN_RIGHT_BOTTOM_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_RIGHT, RoadType.TURN_LEFT_BOTTOM_DOWN, RoadType.TURN_RIGHT_BOTTOM_RIGHT, RoadType.TURN_LEFT_BOTTOM_DOWN
-					},
-					{
-							RoadType.TURN_RIGHT_BOTTOM_RIGHT, RoadType.TURN_LEFT_TOP_UP, RoadType.VOID, RoadType.VOID, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN
-					},
-					{
-							RoadType.DIRECT_90_FINISH_UP, RoadType.TURN_RIGHT_BOTTOM_DOWN, RoadType.DIRECT_LEFT, RoadType.TURN_LEFT_BOTTOM_LEFT, RoadType.TURN_RIGHT_TOP_RIGHT, RoadType.TURN_LEFT_TOP_UP, RoadType.DIRECT_90_DOWN
-					},
-					{
-							RoadType.DIRECT_90_UP, RoadType.TURN_RIGHT_TOP_RIGHT, RoadType.TURN_LEFT_BOTTOM_DOWN, RoadType.TURN_RIGHT_TOP_UP, RoadType.DIRECT_LEFT, RoadType.DIRECT_LEFT, RoadType.TURN_LEFT_TOP_LEFT
-					},
-					{
-							RoadType.DIRECT_90_UP, RoadType.TURN_RIGHT_BOTTOM_DOWN, RoadType.TURN_LEFT_TOP_LEFT, RoadType.TURN_RIGHT_BOTTOM_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_RIGHT, RoadType.TURN_LEFT_BOTTOM_DOWN
-					},
-					{
-							RoadType.DIRECT_90_UP, RoadType.TURN_RIGHT_TOP_RIGHT, RoadType.DIRECT_RIGHT, RoadType.TURN_LEFT_TOP_UP, RoadType.TURN_RIGHT_BOTTOM_DOWN, RoadType.TURN_LEFT_BOTTOM_LEFT, RoadType.DIRECT_90_DOWN
-					},
-					{
-							RoadType.TURN_RIGHT_TOP_UP, RoadType.TURN_LEFT_BOTTOM_LEFT, RoadType.VOID, RoadType.VOID, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN
-					},
-					{
-							RoadType.VOID, RoadType.TURN_RIGHT_TOP_UP, RoadType.DIRECT_LEFT, RoadType.DIRECT_LEFT, RoadType.TURN_LEFT_TOP_LEFT, RoadType.TURN_RIGHT_TOP_UP, RoadType.TURN_LEFT_TOP_LEFT
 					}
 			},
 			new RoadType[][]{
@@ -149,6 +78,32 @@ public final class GameData {
 							RoadType.TURN_RIGHT_BOTTOM_DOWN, RoadType.DIRECT_LEFT, RoadType.DIRECT_LEFT, RoadType.DIRECT_LEFT, RoadType.DIRECT_LEFT, RoadType.TURN_LEFT_BOTTOM_LEFT
 					},
 					{
+							RoadType.DIRECT_90_DOWN, RoadType.TURN_RIGHT_BOTTOM_RIGHT, RoadType.TURN_LEFT_BOTTOM_DOWN, RoadType.TURN_RIGHT_BOTTOM_RIGHT, RoadType.TURN_LEFT_BOTTOM_DOWN, RoadType.DIRECT_90_UP
+					},
+					{
+							RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP
+					},
+					{
+							RoadType.TURN_RIGHT_TOP_RIGHT, RoadType.TURN_LEFT_TOP_UP, RoadType.TURN_RIGHT_TOP_RIGHT, RoadType.TURN_LEFT_TOP_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP
+					},
+					{
+							RoadType.TURN_RIGHT_BOTTOM_DOWN, RoadType.TURN_LEFT_BOTTOM_LEFT, RoadType.TURN_RIGHT_BOTTOM_DOWN, RoadType.TURN_LEFT_BOTTOM_LEFT, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP
+					},
+					{
+							RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP
+					},
+					{
+							RoadType.DIRECT_90_DOWN, RoadType.TURN_RIGHT_TOP_UP, RoadType.TURN_LEFT_TOP_LEFT, RoadType.TURN_RIGHT_TOP_UP, RoadType.TURN_LEFT_TOP_LEFT, RoadType.DIRECT_90_UP
+					},
+					{
+							RoadType.TURN_RIGHT_TOP_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_FINISH_RIGHT, RoadType.TURN_LEFT_TOP_UP
+					}
+			},
+			new RoadType[][]{
+					{
+							RoadType.TURN_RIGHT_BOTTOM_DOWN, RoadType.DIRECT_LEFT, RoadType.DIRECT_LEFT, RoadType.DIRECT_LEFT, RoadType.DIRECT_LEFT, RoadType.TURN_LEFT_BOTTOM_LEFT
+					},
+					{
 							RoadType.DIRECT_90_DOWN, RoadType.TURN_RIGHT_BOTTOM_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_RIGHT, RoadType.TURN_LEFT_TOP_UP
 					},
 					{
@@ -162,6 +117,78 @@ public final class GameData {
 					},
 					{
 							RoadType.DIRECT_90_DOWN, RoadType.TURN_RIGHT_TOP_UP, RoadType.DIRECT_LEFT, RoadType.DIRECT_LEFT, RoadType.TURN_LEFT_TOP_LEFT, RoadType.DIRECT_90_UP
+					},
+					{
+							RoadType.TURN_RIGHT_TOP_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_FINISH_RIGHT, RoadType.TURN_LEFT_TOP_UP
+					}
+			},
+			new RoadType[][]{
+					{
+							RoadType.TURN_RIGHT_BOTTOM_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_FINISH_RIGHT, RoadType.TURN_LEFT_BOTTOM_DOWN
+					},
+					{
+							RoadType.TURN_RIGHT_TOP_UP, RoadType.DIRECT_LEFT, RoadType.TURN_LEFT_BOTTOM_LEFT, RoadType.TURN_RIGHT_BOTTOM_DOWN, RoadType.DIRECT_LEFT, RoadType.TURN_LEFT_TOP_LEFT
+					},
+					{
+							RoadType.TURN_RIGHT_BOTTOM_RIGHT, RoadType.DIRECT_RIGHT, RoadType.TURN_LEFT_TOP_UP, RoadType.DIRECT_90_DOWN, RoadType.TURN_RIGHT_BOTTOM_RIGHT, RoadType.TURN_LEFT_BOTTOM_DOWN
+					},
+					{
+							RoadType.DIRECT_90_UP, RoadType.TURN_RIGHT_BOTTOM_DOWN, RoadType.TURN_LEFT_BOTTOM_LEFT, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN
+					},
+					{
+							RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN
+					},
+					{
+							RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.TURN_RIGHT_TOP_RIGHT, RoadType.TURN_LEFT_TOP_UP, RoadType.DIRECT_90_DOWN
+					},
+					{
+							RoadType.TURN_RIGHT_TOP_UP, RoadType.TURN_LEFT_TOP_LEFT, RoadType.TURN_RIGHT_TOP_UP, RoadType.DIRECT_LEFT, RoadType.DIRECT_LEFT, RoadType.TURN_LEFT_TOP_LEFT
+					}
+			},
+			new RoadType[][]{
+					{
+							RoadType.VOID, RoadType.TURN_RIGHT_BOTTOM_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_RIGHT, RoadType.TURN_LEFT_BOTTOM_DOWN, RoadType.TURN_RIGHT_BOTTOM_RIGHT, RoadType.TURN_LEFT_BOTTOM_DOWN
+					},
+					{
+							RoadType.TURN_RIGHT_BOTTOM_RIGHT, RoadType.TURN_LEFT_TOP_UP, RoadType.VOID, RoadType.VOID, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN
+					},
+					{
+							RoadType.DIRECT_90_FINISH_UP, RoadType.TURN_RIGHT_BOTTOM_DOWN, RoadType.DIRECT_LEFT, RoadType.TURN_LEFT_BOTTOM_LEFT, RoadType.TURN_RIGHT_TOP_RIGHT, RoadType.TURN_LEFT_TOP_UP, RoadType.DIRECT_90_DOWN
+					},
+					{
+							RoadType.DIRECT_90_UP, RoadType.TURN_RIGHT_TOP_RIGHT, RoadType.TURN_LEFT_BOTTOM_DOWN, RoadType.TURN_RIGHT_TOP_UP, RoadType.DIRECT_LEFT, RoadType.DIRECT_LEFT, RoadType.TURN_LEFT_TOP_LEFT
+					},
+					{
+							RoadType.DIRECT_90_UP, RoadType.TURN_RIGHT_BOTTOM_DOWN, RoadType.TURN_LEFT_TOP_LEFT, RoadType.TURN_RIGHT_BOTTOM_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_RIGHT, RoadType.TURN_LEFT_BOTTOM_DOWN
+					},
+					{
+							RoadType.DIRECT_90_UP, RoadType.TURN_RIGHT_TOP_RIGHT, RoadType.DIRECT_RIGHT, RoadType.TURN_LEFT_TOP_UP, RoadType.TURN_RIGHT_BOTTOM_DOWN, RoadType.TURN_LEFT_BOTTOM_LEFT, RoadType.DIRECT_90_DOWN
+					},
+					{
+							RoadType.TURN_RIGHT_TOP_UP, RoadType.TURN_LEFT_BOTTOM_LEFT, RoadType.VOID, RoadType.VOID, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN
+					},
+					{
+							RoadType.VOID, RoadType.TURN_RIGHT_TOP_UP, RoadType.DIRECT_LEFT, RoadType.DIRECT_LEFT, RoadType.TURN_LEFT_TOP_LEFT, RoadType.TURN_RIGHT_TOP_UP, RoadType.TURN_LEFT_TOP_LEFT
+					}
+			},
+			new RoadType[][]{
+					{
+							RoadType.TURN_RIGHT_BOTTOM_DOWN, RoadType.DIRECT_LEFT, RoadType.DIRECT_LEFT, RoadType.DIRECT_LEFT, RoadType.DIRECT_LEFT, RoadType.TURN_LEFT_BOTTOM_LEFT
+					},
+					{
+							RoadType.DIRECT_90_DOWN, RoadType.TURN_RIGHT_BOTTOM_RIGHT, RoadType.TURN_LEFT_BOTTOM_DOWN, RoadType.TURN_RIGHT_BOTTOM_RIGHT, RoadType.TURN_LEFT_BOTTOM_DOWN, RoadType.DIRECT_90_UP
+					},
+					{
+							RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP
+					},
+					{
+							RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP
+					},
+					{
+							RoadType.TURN_RIGHT_TOP_RIGHT, RoadType.TURN_LEFT_TOP_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.TURN_RIGHT_TOP_RIGHT, RoadType.TURN_LEFT_TOP_UP
+					},
+					{
+							RoadType.TURN_RIGHT_BOTTOM_DOWN, RoadType.DIRECT_LEFT, RoadType.TURN_LEFT_TOP_LEFT, RoadType.TURN_RIGHT_TOP_UP, RoadType.DIRECT_LEFT, RoadType.TURN_LEFT_BOTTOM_LEFT
 					},
 					{
 							RoadType.TURN_RIGHT_TOP_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_FINISH_RIGHT, RoadType.TURN_LEFT_TOP_UP
@@ -185,29 +212,6 @@ public final class GameData {
 					},
 					{
 							RoadType.DIRECT_90_DOWN, RoadType.VOID, RoadType.TURN_RIGHT_TOP_UP, RoadType.TURN_LEFT_TOP_LEFT, RoadType.VOID, RoadType.DIRECT_90_UP
-					},
-					{
-							RoadType.TURN_RIGHT_TOP_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_FINISH_RIGHT, RoadType.TURN_LEFT_TOP_UP
-					}
-			},
-			new RoadType[][]{
-					{
-							RoadType.TURN_RIGHT_BOTTOM_DOWN, RoadType.DIRECT_LEFT, RoadType.DIRECT_LEFT, RoadType.DIRECT_LEFT, RoadType.DIRECT_LEFT, RoadType.TURN_LEFT_BOTTOM_LEFT
-					},
-					{
-							RoadType.DIRECT_90_DOWN, RoadType.TURN_RIGHT_BOTTOM_RIGHT, RoadType.TURN_LEFT_BOTTOM_DOWN, RoadType.TURN_RIGHT_BOTTOM_RIGHT, RoadType.TURN_LEFT_BOTTOM_DOWN, RoadType.DIRECT_90_UP
-					},
-					{
-							RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP
-					},
-					{
-							RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP
-					},
-					{
-							RoadType.TURN_RIGHT_TOP_RIGHT, RoadType.TURN_LEFT_TOP_UP, RoadType.DIRECT_90_DOWN, RoadType.DIRECT_90_UP, RoadType.TURN_RIGHT_TOP_RIGHT, RoadType.TURN_LEFT_TOP_UP
-					},
-					{
-							RoadType.TURN_RIGHT_BOTTOM_DOWN, RoadType.DIRECT_LEFT, RoadType.TURN_LEFT_TOP_LEFT, RoadType.TURN_RIGHT_TOP_UP, RoadType.DIRECT_LEFT, RoadType.TURN_LEFT_BOTTOM_LEFT
 					},
 					{
 							RoadType.TURN_RIGHT_TOP_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_RIGHT, RoadType.DIRECT_FINISH_RIGHT, RoadType.TURN_LEFT_TOP_UP
@@ -528,9 +532,12 @@ public final class GameData {
 						break;
 					case 8:
 						num1 = rand(4, 8) + rand(1, 8) * 0.1f;
-						num2 = rand(10 - (n1 / 10) % 10, 9) * 10 + rand(1, 9 - n1 % 10) * 0.1f;
-						num1 = ((int) (num1) * 100) / 100f;
-						num2 = ((int) (num2) * 100) / 100f;
+						num2 = rand(1, 9 - n1 % 10) + rand(1, 9 - (n1 * 10) % 10) * 0.1f;
+						num1 = ((int) (num1 * 10)) / 10f;
+						num2 = ((int) (num2 * 10)) / 10f;
+						Log.i("sum", ((num1 - (int) num1) + (num2 - (int) num2)) + "");
+						if (((num1 - (int) num1) + (num2 - (int) num2)) >= 0.99f || ((int) num1 + (int) num2) >= 9.99f)
+							return getLevelNumbers(operation, operationLevel);
 						return new float[]{num1, num2};
 					case 9:
 						n1 = rand(5, 9) * 10 + rand(1, 8);
@@ -549,16 +556,16 @@ public final class GameData {
 						n2 = rand(1, 9 - (n1 / 100) % 10) * 100 + rand(10 - (n1 / 10) % 10, 9) * 10 + rand(10 - (n1 % 10), 9);
 						break;
 					case 13:
-						num1 = rand(5, 9) + rand(1, 8) * 0.1f;
-						num2 = rand(5, 9) + rand(1, 9 - n1 % 10) * 0.1f;
-						num1 = ((int) (num1) * 100) / 100f;
-						num2 = ((int) (num2) * 100) / 100f;
+						num1 = rand(1, 8) + rand(1, 9) * 0.1f;
+						num2 = rand(1, 9 - (int) (num1 % 10)) + rand(10 - (int) ((num1 * 10) % 10), 9) * 0.1f;
+						num1 = ((int) (num1 * 10)) / 10f;
+						num2 = ((int) (num2 * 10)) / 10f;
 						return new float[]{num1, num2};
 					case 14:
-						num1 = rand(5, 9) + rand(1, 8) * 0.1f;
-						num2 = rand(5, 9) + rand(10 - n1 % 10, 9) * 0.1f;
-						num1 = ((int) (num1) * 100) / 100f;
-						num2 = ((int) (num2) * 100) / 100f;
+						num1 = rand(5, 9) + rand(1, 9) * 0.1f;
+						num2 = rand(5, 9) + rand(10 - (int) ((num1 * 10) % 10), 9) * 0.1f;
+						num1 = ((int) (num1 * 10)) / 10f;
+						num2 = ((int) (num2 * 10)) / 10f;
 						return new float[]{num1, num2};
 				}
 				break;
@@ -578,11 +585,11 @@ public final class GameData {
 						break;
 					case 4:
 						n1 = rand(4, 9) * 10 + rand(6, 9);
-						n2 = rand(3, (n1 / 10) % 10) * 10 + rand(7, n1 % 10);
+						n2 = rand(3, (n1 / 10) % 10) * 10 + rand(1, n1 % 10);
 						break;
 					case 5:
 						n1 = rand(4, 9) * 100 + rand(6, 9) * 10 + rand(6, 9);
-						n2 = rand(3, (n1 / 10) % 100) * 100 + rand(3, (n1 / 10) % 10) * 10 + rand(3, n1 % 10);
+						n2 = rand(3, (n1 / 100) % 100) * 100 + rand(3, (n1 / 10) % 10) * 10 + rand(3, n1 % 10);
 						break;
 					case 6:
 						n1 = 10 + rand(1, 5);
@@ -607,8 +614,8 @@ public final class GameData {
 					case 11:
 						num1 = rand(4, 9) + rand(1, 5) * 0.1f;
 						num2 = rand(2, n1 % 10 - 1) + rand(6, 9) * 0.1f;
-						num1 = ((int) (num1) * 100) / 100f;
-						num2 = ((int) (num2) * 100) / 100f;
+						num1 = ((int) (num1 * 10)) / 10f;
+						num2 = ((int) (num2 * 10)) / 10f;
 						return new float[]{num1, num2};
 					case 12:
 						n1 = rand(1, 4) * 10 + rand(1, 5);
@@ -617,8 +624,8 @@ public final class GameData {
 					case 13:
 						num1 = rand(1, 4) + rand(1, 5) * 0.1f;
 						num2 = rand(6, 9) + rand(6, 9) * 0.1f;
-						num1 = ((int) (num1) * 100) / 100f;
-						num2 = ((int) (num2) * 100) / 100f;
+						num1 = ((int) (num1 * 10)) / 10f;
+						num2 = ((int) (num2 * 10)) / 10f;
 						return new float[]{num1, num2};
 				}
 				break;
@@ -638,7 +645,7 @@ public final class GameData {
 						break;
 					case 4:
 						n1 = rand(3, 4);
-						n2 = rand(1, 5);
+						n2 = rand(2, 5);
 						break;
 					case 5:
 						n1 = rand(3, 4);
@@ -653,39 +660,39 @@ public final class GameData {
 						n2 = rand(6, 9);
 						break;
 					case 8:
-						n1 = rand(3, 9) * rand(-1, 1);
-						n2 = rand(3, 9) * rand(-1, 1);
+						n1 = rand(3, 9) * (((int) (Math.random() * 10) % 2) == 0 ? 1 : -1);
+						n2 = rand(3, 9) * (((int) (Math.random() * 10) % 2) == 0 ? 1 : -1);
 						break;
 					case 9:
-						n1 = 20;
+						n1 = rand(2, 4) * 10;
 						n2 = rand(2, 9);
 						break;
 					case 10:
 						n1 = 15;
-						n2 = rand(2, 9);
+						n2 = rand(2, 12);
 						break;
 					case 11:
-						n1 = rand(4, 9) * 10;
+						n1 = rand(6, 9) * 10;
 						n2 = rand(2, 9);
 						break;
 					case 12:
 						n1 = 25;
-						n2 = rand(3, 9);
+						n2 = rand(3, 12);
 						break;
 					case 13:
 						num1 = rand(2, 9) * 0.1f;
-						num2 = rand(2, 9) * randF(0.1f, 1);
-						num1 = ((int) (num1) * 100) / 100f;
-						num2 = ((int) (num2) * 100) / 100f;
-						return new float[]{num1, num2};
+						num2 = rand(2, 9) * (((int) (Math.random() * 10) % 2) == 0 ? 0.1f : 1);
+						num1 = ((int) (num1 * 10)) / 10f;
+						num2 = ((int) (num2 * 10)) / 10f;
+						return ((int) (Math.random() * 10) % 2) == 0 ? new float[]{num1, num2} : new float[]{num2, num1};
 					case 14:
-						num1 = rand(2, 9) * randF(0.1f, 1) * rand(-1, 1);
-						num2 = rand(2, 9) * randF(0.1f, 1) * rand(-1, 1);
-						num1 = ((int) (num1) * 100) / 100f;
-						num2 = ((int) (num2) * 100) / 100f;
-						return new float[]{num1, num2};
+						num1 = rand(2, 9) * (((int) (Math.random() * 10) % 2) == 0 ? 0.1f : 1) * (((int) (Math.random() * 10) % 2) == 0 ? 1 : -1);
+						num2 = rand(2, 9) * (((int) (Math.random() * 10) % 2) == 0 ? 0.1f : 1) * (((int) (Math.random() * 10) % 2) == 0 ? 1 : -1);
+						num1 = ((int) (num1 * 10)) / 10f;
+						num2 = ((int) (num2 * 10)) / 10f;
+						return ((int) (Math.random() * 10) % 2) == 0 ? new float[]{num1, num2} : new float[]{num2, num1};
 				}
-				break;
+				return ((int) (Math.random() * 10) % 2) == 0 ? new float[]{n1, n2} : new float[]{n2, n1};
 			default:
 				switch (operationLevel) {
 					case 1:
@@ -725,7 +732,7 @@ public final class GameData {
 						n1 = n2 * rand(2, 11);
 						break;
 					case 10:
-						n1 = rand(1, 4) * 2 * 100 + rand(1, 4) * 2 * 10 + rand(1, 4) * 2;
+						n1 = (rand(0, 4) * 2 + 1) * 100 + (rand(0, 4) * 2 + 1) * 10 + rand(1, 4) * 2;
 						n2 = 2;
 						break;
 					case 11:
@@ -739,7 +746,7 @@ public final class GameData {
 					case 13:
 						num1 = rand(3, 19) * 0.5f;
 						num2 = 0.5f;
-						num1 = ((int) (num1) * 100) / 100f;
+						num1 = ((int) (num1 * 10)) / 10f;
 						return new float[]{num1, num2};
 					case 14:
 						n1 = rand(5, 19) * 25;
@@ -748,7 +755,7 @@ public final class GameData {
 					case 15:
 						num1 = rand(5, 19) * 0.25f;
 						num2 = 0.25f;
-						num1 = ((int) (num1) * 100) / 100f;
+						num1 = ((int) (num1 * 10)) / 10f;
 						return new float[]{num1, num2};
 				}
 				break;
@@ -761,17 +768,13 @@ public final class GameData {
 		return (int) ((Math.random() * ++max) + min);
 	}
 
-	private static float randF(float min, float max) {
-		max -= min;
-		return (float) ((Math.random() * ++max) + min);
-	}
-
 	public static final LevelCount[] levelCounts = new LevelCount[]{
 			LevelCount.ADDITION, LevelCount.SUBTRACTION, LevelCount.MULTIPLICATION, LevelCount.DIVISION
 	};
 
 }
 
+// constants of level counts
 enum LevelCount {
 
 	ADDITION(14), SUBTRACTION(13), MULTIPLICATION(14), DIVISION(15);

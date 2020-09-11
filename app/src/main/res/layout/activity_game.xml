@@ -11,7 +11,7 @@
         android:layout_height="19dp"
         android:layout_alignParentStart="true" />
 
-    <androidx.appcompat.widget.Toolbar
+    <Toolbar
         android:id="@+id/app_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|top"
-                    android:text="4"
+                    android:text="2"
                     android:textColor="?android:attr/textColor"
                     android:textSize="20sp" />
 
@@ -90,7 +90,7 @@
                 android:src="@drawable/forward_arrow" />
         </RelativeLayout>
 
-    </androidx.appcompat.widget.Toolbar>
+    </Toolbar>
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -198,7 +198,7 @@
         android:layout_above="@id/num_pad"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
-        android:text="3"
+        android:text="2"
         android:textColor="@color/red_countdown_text_color"
         android:textSize="45sp" />
 

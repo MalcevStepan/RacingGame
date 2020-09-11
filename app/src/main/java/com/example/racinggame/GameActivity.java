@@ -9,6 +9,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -30,7 +31,7 @@ public class GameActivity extends AppCompatActivity implements OnGameActionListe
 	private final int[] seconds = new int[]{0};
 	private Animation showQuestion, hideQuestion;
 	private static final int QUESTION_ANIMATION_DURATION = 400;
-	private int lapsCount = 4, computerLapsCount = 4;
+	private int lapsCount = 2, computerLapsCount = lapsCount;
 	private Drawable[] lights;
 	private int[] countdownTextColors;
 	private TextView answerText;
@@ -72,19 +73,15 @@ public class GameActivity extends AppCompatActivity implements OnGameActionListe
 		setTheme(ui_mode ? R.style.AppThemeDark : R.style.AppThemeLight);
 
 		binding = ActivityGameBinding.inflate(getLayoutInflater());
-		setContentView(binding.getRoot());
 
 		final Resources res = getResources();
 		final Resources.Theme theme = getTheme();
 
+		setToolbarButtonsColors(res, theme);
+
+		setContentView(binding.getRoot());
+
 		int textColor = res.getColor(R.color.question_bar_text_color);
-		if (!ui_mode) {
-			int color = res.getColor(R.color.toolbar_light_color);
-			binding.nextButton.setColorFilter(color);
-			binding.updateButton.setColorFilter(color);
-			binding.settingsButton.setColorFilter(color);
-			binding.removeButton.setImageDrawable(ResourcesCompat.getDrawable(res, R.drawable.remove_light, theme));
-		}
 
 		binding.questionText.setTextColor(textColor);
 		binding.answerText.setTextColor(textColor);
@@ -99,23 +96,23 @@ public class GameActivity extends AppCompatActivity implements OnGameActionListe
 
 		converter = new NumeralConverter();
 
+		// disable button to next level
 		binding.nextButton.setEnabled(false);
 
 		final Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Thin.ttf"),
 				light_font = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
-		binding.countdownText.setTypeface(light_font);
-		binding.timeText.setTypeface(font);
-		binding.questionText.setTypeface(light_font);
-		binding.answerText.setTypeface(light_font);
-		binding.lapsText.setTypeface(font);
+
+		setToolbarFont(light_font, font);
 		setNumPadFont(light_font);
 
 		GameView gameView = binding.gameView;
-		gameView.setTrack(GameData.tracks[operation + (operation_level >= GameData.levelCounts[operation].getCount() / 2 ? 1 : 0)]);
+		gameView.setTrack(GameData.tracks[operation * 2 + (operation_level >= GameData.levelCounts[operation].getCount() / 2 ? 1 : 0)]);
 		gameView.setListener(this);
 
+		// setting background color to velocity scale
 		binding.velocityScale.setBgColor(ui_mode);
 
+		// traffic light drawables
 		lights = new Drawable[]{
 				ResourcesCompat.getDrawable(res, R.drawable.green_traffic_light, theme),
 				ResourcesCompat.getDrawable(res, R.drawable.orange_traffic_light, theme),
@@ -126,11 +123,13 @@ public class GameActivity extends AppCompatActivity implements OnGameActionListe
 				res.getColor(R.color.orange_countdown_text_color)
 		};
 
+		// setting background to track
 		gameView.setUIMode(ui_mode);
 
 		if (numerals)
 			setArabicNumerals();
 
+		// settings
 		final String reference_speed = sharedPreferences.getString(GameData.APP_PREFERENCES_REFERENCE_SPEED, "5");
 		final String[] speed_level_coefs = new String[]{
 				sharedPreferences.getString(GameData.APP_PREFERENCES_SPEED_LEVEL_COEF_2, "1.1"),
@@ -140,93 +139,128 @@ public class GameActivity extends AppCompatActivity implements OnGameActionListe
 		final String user_constant_speed = sharedPreferences.getString(GameData.APP_PREFERENCES_USER_CONSTANT_SPEED, "0.7"),
 				pulse_amplitude = sharedPreferences.getString(GameData.APP_PREFERENCES_PULSE_AMPLITUDE, "1.5");
 
+		// drawables ot check button
 		final Drawable wrongAnswerDrawable = ResourcesCompat.getDrawable(res, R.drawable.wrong_answer_image, theme);
 		final Drawable correctAnswerDrawable = ResourcesCompat.getDrawable(res, R.drawable.check_image, theme);
 
 		final Animation hideTrafficLight = AnimationUtils.loadAnimation(this, R.anim.hide_traffic_light);
 
+		// getting numbers to question
 		final float[] questionNumbers = GameData.getLevelNumbers(operation, operation_level);
+		// saving questions history to avoid repeating of questions
 		questionsList.add(questionNumbers);
 		correctAnswer = countCorrectAnswer(questionNumbers, operation);
 		final TimerThread timerThread = new TimerThread(numerals);
 		final CountDownThread countDownThread = new CountDownThread(questionNumbers, operation, numerals, timerThread, hideTrafficLight);
 		countDownThread.start();
 
+		setCarSpeedAndImpulse(gameView, reference_speed, user_constant_speed, pulse_amplitude, speed_level, speed_level_coefs);
 		gameView.setCarColor(user_color);
+
+
+		showQuestion = AnimationUtils.loadAnimation(this, R.anim.show_question);
+		hideQuestion = AnimationUtils.loadAnimation(this, R.anim.hide_question);
+
+		binding.settingsButton.setOnClickListener(view -> startSettingsActivity(gameView, timerThread));
+
+		// give the impulse if answer is correct
+		binding.checkButton.setOnClickListener(view -> checkAnswer(gameView, res, operation, operation_level, correctAnswerDrawable, wrongAnswerDrawable));
+
+		binding.updateButton.setOnClickListener(view -> restartGame(gameView));
+
+		binding.nextButton.setOnClickListener(view -> startResultActivity(gameView, timerThread));
+	}
+
+	private void setToolbarButtonsColors(Resources res, Resources.Theme theme) {
+		if (!ui_mode) {
+			int color = res.getColor(R.color.toolbar_light_color);
+			binding.nextButton.setColorFilter(color);
+			binding.updateButton.setColorFilter(color);
+			binding.settingsButton.setColorFilter(color);
+			binding.removeButton.setImageDrawable(ResourcesCompat.getDrawable(res, R.drawable.remove_light, theme));
+		}
+	}
+
+	private void restartGame(GameView gameView) {
+		gameView.stopRace();
+		this.recreate();
+	}
+
+	private void startResultActivity(GameView gameView, TimerThread timerThread) {
+		Intent intent = new Intent(this, ResultActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		intent.putExtra(GameData.CORRECT_ANSWER_COUNT, String.valueOf(correctAnswerCount));
+		intent.putExtra(GameData.WRONG_ANSWER_COUNT, String.valueOf(wrongAnswerCount));
+		intent.putExtra(GameData.APP_PREFERENCES_UI_MODE, ui_mode);
+		intent.putExtra(GameData.APP_PREFERENCES_NUMERALS, numerals);
+		startActivity(intent);
+		raceIsRunning = false;
+		gameView.setRunning(false);
+		stopTimer(timerThread);
+		finish();
+	}
+
+	private void setCarSpeedAndImpulse(GameView gameView, String reference_speed, String user_constant_speed, String pulse_amplitude, int speed_level, String[] speed_level_coefs) {
 		if (reference_speed != null && user_constant_speed != null && pulse_amplitude != null) {
 			gameView.setReferenceSpeed(Float.parseFloat(reference_speed));
 			gameView.setUserSpeed(Float.parseFloat(reference_speed) / Float.parseFloat(user_constant_speed));
 			gameView.setImpulseAmplitude(Float.parseFloat(pulse_amplitude));
 			gameView.setSpeedLevelCoef(speed_level == 1 ? 1f : Float.parseFloat(speed_level_coefs[speed_level - 2]));
 		}
+	}
 
-		showQuestion = AnimationUtils.loadAnimation(this, R.anim.show_question);
-		hideQuestion = AnimationUtils.loadAnimation(this, R.anim.hide_question);
+	private void startSettingsActivity(GameView gameView, TimerThread timerThread) {
+		Intent intent = new Intent(this, SettingsActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		startActivity(intent);
+		raceIsRunning = false;
+		gameView.setRunning(false);
+		stopTimer(timerThread);
+		finish();
+	}
 
-		binding.settingsButton.setOnClickListener(view -> {
-			Intent intent = new Intent(this, SettingsActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-			startActivity(intent);
-			raceIsRunning = false;
-			gameView.setRunning(false);
-			stopTimer(timerThread);
-			finish();
-		});
-
-		binding.checkButton.setOnClickListener(view -> {
-			String answer = binding.answerText.getText().toString();
-			if (numerals) answer = converter.convertToArabic(answer);
-			int len = answer.length();
-			if (len > 1 || (len == 1 && !answer.equals("-"))) {
-				if (Float.parseFloat(answer) == correctAnswer) {
-					gameView.giveImpulse();
-					binding.velocityScale.animateScale();
-					binding.checkButton.setClickable(false);
-					binding.answerText.setTextColor(res.getColor(R.color.correct_green_color));
-					setNewQuestion(res, operation, operation_level, correctAnswerDrawable, numerals);
-					correctAnswerCount++;
-				} else {
-					binding.answerText.setTextColor(res.getColor(R.color.wrong_red_color));
-					binding.checkButton.setImageDrawable(wrongAnswerDrawable);
-					binding.checkButton.setClickable(false);
-					setNewQuestion(res, operation, operation_level, correctAnswerDrawable, numerals);
-					wrongAnswerCount++;
-				}
+	private void checkAnswer(GameView gameView, Resources res, int operation, int operation_level, Drawable correctAnswerDrawable, Drawable wrongAnswerDrawable) {
+		String answer = binding.answerText.getText().toString();
+		if (numerals) answer = converter.convertToArabic(answer);
+		int len = answer.length();
+		if (len > 1 || (len == 1 && !answer.equals("-"))) {
+			if (Float.parseFloat(answer) == correctAnswer) {
+				gameView.giveImpulse();
+				binding.velocityScale.animateScale();
+				binding.checkButton.setClickable(false);
+				binding.answerText.setTextColor(res.getColor(R.color.correct_green_color));
+				setNewQuestion(res, operation, operation_level, correctAnswerDrawable, numerals);
+				correctAnswerCount++;
+			} else {
+				binding.answerText.setTextColor(res.getColor(R.color.wrong_red_color));
+				binding.checkButton.setImageDrawable(wrongAnswerDrawable);
+				binding.checkButton.setClickable(false);
+				setNewQuestion(res, operation, operation_level, correctAnswerDrawable, numerals);
+				wrongAnswerCount++;
 			}
-		});
+		}
+	}
 
-		binding.updateButton.setOnClickListener(view -> {
-			gameView.stopRace();
-			this.recreate();
-		});
-
-		binding.nextButton.setOnClickListener(view -> {
-			Intent intent = new Intent(this, ResultActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-			intent.putExtra(GameData.CORRECT_ANSWER_COUNT, String.valueOf(correctAnswerCount));
-			intent.putExtra(GameData.WRONG_ANSWER_COUNT, String.valueOf(wrongAnswerCount));
-			intent.putExtra(GameData.APP_PREFERENCES_UI_MODE, ui_mode);
-			intent.putExtra(GameData.APP_PREFERENCES_NUMERALS, numerals);
-			startActivity(intent);
-			raceIsRunning = false;
-			gameView.setRunning(false);
-			stopTimer(timerThread);
-			finish();
-		});
+	private void setToolbarFont(Typeface light_font, Typeface font) {
+		binding.countdownText.setTypeface(light_font);
+		binding.timeText.setTypeface(font);
+		binding.questionText.setTypeface(light_font);
+		binding.answerText.setTypeface(light_font);
+		binding.lapsText.setTypeface(font);
 	}
 
 	private float countCorrectAnswer(float[] numbers, int operation) {
 		switch (operation) {
 			case 0:
-				return numbers[0] + numbers[1];
+				return (((int) (numbers[0] * 10)) + ((int) (numbers[1] * 10))) / 10f;
 			case 1:
-				return numbers[0] - numbers[1];
+				return (((int) (numbers[0] * 10)) - ((int) (numbers[1] * 10))) / 10f;
 			case 2:
-				return numbers[0] * numbers[1];
+				return (((int) (numbers[0] * 100)) * ((int) (numbers[1] * 100))) / 10000f;
 			default:
-				return numbers[0] / numbers[1];
+				return ((int) (numbers[0] * 100)) / ((int) (numbers[1] * 100));
 		}
 	}
 
@@ -280,6 +314,7 @@ public class GameActivity extends AppCompatActivity implements OnGameActionListe
 					int attempts = 15;
 					while (!isOtherNumbers) {
 						numbers = GameData.getLevelNumbers(operation, operation_level);
+						Log.i("num", numbers[0] + "x" + numbers[1]);
 						boolean check = false;
 						for (float[] prevNumbers : questionsList)
 							if (prevNumbers[0] == numbers[0] && prevNumbers[1] == numbers[1]) {
@@ -345,8 +380,8 @@ public class GameActivity extends AppCompatActivity implements OnGameActionListe
 				operationChar = " ÷ ";
 				break;
 		}
-		boolean isFraction1 = numbers[0] > (int) numbers[0],
-				isFraction2 = numbers[1] > (int) numbers[1];
+		boolean isFraction1 = Math.abs(numbers[0]) > Math.abs((int) numbers[0]),
+				isFraction2 = Math.abs(numbers[1]) > Math.abs((int) numbers[1]);
 		String num1, num2;
 		if (isFraction1) num1 = String.valueOf(numbers[0]);
 		else num1 = String.valueOf((int) numbers[0]);
@@ -388,7 +423,7 @@ public class GameActivity extends AppCompatActivity implements OnGameActionListe
 	public void onFinish() {
 		runOnUiThread(() -> {
 			lapsCount--;
-			if (lapsCount == 0)
+			if (lapsCount == -1)
 				onRaceFinish();
 			else {
 				if (numerals)
@@ -404,7 +439,7 @@ public class GameActivity extends AppCompatActivity implements OnGameActionListe
 		runOnUiThread(() -> {
 			int green = getResources().getColor(R.color.correct_green_color);
 			binding.finishText.setVisibility(View.VISIBLE);
-			if (computerLapsCount == 0) {
+			if (computerLapsCount == -1) {
 				binding.updateButton.setColorFilter(green);
 				binding.finishText.setText(getString(R.string.lost_text));
 				binding.finishText.setTextColor(getResources().getColor(R.color.wrong_red_color));
@@ -424,7 +459,7 @@ public class GameActivity extends AppCompatActivity implements OnGameActionListe
 	@Override
 	public void onComputerFinish() {
 		computerLapsCount--;
-		if (computerLapsCount == 0)
+		if (computerLapsCount == -1)
 			onRaceFinish();
 	}
 
@@ -468,15 +503,15 @@ public class GameActivity extends AppCompatActivity implements OnGameActionListe
 		@Override
 		public void run() {
 			try {
-				int countdownSec = 3;
-				while (countdownSec > 1) {
+				int countdownSec = 2;
+				while (countdownSec > 0) {
 					Thread.sleep(1000);
 					countdownSec--;
 					int finalCountdownSec = countdownSec;
 					runOnUiThread(() -> {
 						if (binding != null) {
-							binding.trafficLight.setImageDrawable(lights[finalCountdownSec - 1]);
-							binding.countdownText.setTextColor(countdownTextColors[finalCountdownSec - 1]);
+							binding.trafficLight.setImageDrawable(lights[finalCountdownSec]);
+							binding.countdownText.setTextColor(countdownTextColors[finalCountdownSec]);
 							if (isArabicNumerals)
 								binding.countdownText.setText(converter.convertToEstArabic(finalCountdownSec));
 							else binding.countdownText.setText(String.valueOf(finalCountdownSec));

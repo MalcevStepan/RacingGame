@@ -13,10 +13,11 @@ public class Car {
 	private double angle = 0;
 	private Matrix matrix;
 	private int w, h;
-	private double angleV, velocity, defaultVelocity, impulsePercent = 0, radius;
+	private double angleV, defaultVelocity, impulsePercent = 0, radius;
 	private Bitmap carLeft, carRight, carUp, carDown;
 	private boolean isRunning = false, isComputerCar;
-	private int marginStartPx, marginTopPx, viewWidth;
+	private int marginStartPx, marginTopPx, viewWidth, velocity;
+	private static final int MAX_FPS = 50;
 	private static final float impulseAmplitudeDefValue = 0.5f;
 	private final double[] lognormalDistr = Arrays.copyOf(GameData.lognormalDistr, GameData.lognormalDistr.length);
 	private OnViewActionListener viewActionListener;
@@ -58,8 +59,8 @@ public class Car {
 
 	public final void setCarVelocity(double deltaTime) {
 		if (isRunning) {
-			double defVelocity = viewWidth / (defaultVelocity * (1000 / deltaTime));
-			velocity = (defVelocity + defVelocity * impulsePercent) * deltaTime / 17;
+			double defVelocity = viewWidth / (defaultVelocity * MAX_FPS);
+			velocity = (int) ((defVelocity + defVelocity * impulsePercent) * deltaTime / 17);
 			angleV = velocity / radius;
 		} else velocity = 0;
 	}

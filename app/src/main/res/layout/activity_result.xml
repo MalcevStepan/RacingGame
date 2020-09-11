@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context=".ResultActivity">
 
-    <androidx.appcompat.widget.Toolbar
+    <Toolbar
         android:id="@+id/app_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
                 android:src="@drawable/forward_arrow" />
         </RelativeLayout>
 
-    </androidx.appcompat.widget.Toolbar>
+    </Toolbar>
 
     <TextView
         android:id="@+id/correct_text"

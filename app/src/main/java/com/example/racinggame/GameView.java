@@ -96,6 +96,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, OnV
 
 	public final void stopRace() {
 		thread.setRunning(false);
+		userCar.setCarVelocity(0);
+		computerCar.setCarVelocity(0);
 		userCar.setCarRunning(false);
 		computerCar.setCarRunning(false);
 	}
@@ -167,6 +169,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, OnV
 			this.isRunning = isRunning;
 		}
 
+
+		// drawing game view
 		@Override
 		public void run() {
 			Canvas canvas = null;
@@ -190,6 +194,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, OnV
 						userCar.setImpulseAmplitude(pulseAmplitude);
 						isFirstDraw = false;
 					}
+					// drawColor(bg_color) is equals to redraw canvas
 					canvas.drawColor(bg_color);
 					drawTrack(canvas, track);
 					double deltaTime = timer.getDeltaTime();
