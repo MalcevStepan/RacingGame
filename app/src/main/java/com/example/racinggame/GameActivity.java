@@ -204,7 +204,7 @@ public class GameActivity extends AppCompatActivity implements OnGameActionListe
 	private void setCarSpeedAndImpulse(GameView gameView, String reference_speed, String user_constant_speed, String pulse_amplitude, int speed_level, String[] speed_level_coefs) {
 		if (reference_speed != null && user_constant_speed != null && pulse_amplitude != null) {
 			gameView.setReferenceSpeed(Float.parseFloat(reference_speed));
-			gameView.setUserSpeed(Float.parseFloat(reference_speed) / Float.parseFloat(user_constant_speed));
+			gameView.setUserSpeed(Float.parseFloat(reference_speed) * Float.parseFloat(user_constant_speed));
 			gameView.setImpulseAmplitude(Float.parseFloat(pulse_amplitude));
 			gameView.setSpeedLevelCoef(speed_level == 1 ? 1f : Float.parseFloat(speed_level_coefs[speed_level - 2]));
 		}

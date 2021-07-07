@@ -18,6 +18,7 @@ public class VelocityScale extends View {
 	private final Rect scale;
 	private int startXPos;
 	private boolean isDescending, isFirstDraw = true;
+	private int velocity = 70;
 
 	public VelocityScale(Context context, @Nullable AttributeSet attrs) {
 		super(context, attrs);
@@ -31,8 +32,8 @@ public class VelocityScale extends View {
 			isDescending = false;
 			while (scale.left < scale.right) {
 				try {
-					scale.left += 10;
-					Thread.sleep(10);
+					scale.left += velocity;
+					Thread.sleep(20);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -41,7 +42,7 @@ public class VelocityScale extends View {
 			while (scale.left > startXPos && isDescending) {
 				try {
 					synchronized (scale) {
-						scale.left -= 5;
+						scale.left -= (velocity / 2);
 					}
 					Thread.sleep(20);
 				} catch (InterruptedException e) {
@@ -67,6 +68,7 @@ public class VelocityScale extends View {
 			scale.right = width;
 			scale.bottom = height;
 			isFirstDraw = false;
+			velocity = width / velocity;
 		}
 		velocityScaleDrawable.draw(canvas);
 		canvas.drawRect(scale, paint);

@@ -72,7 +72,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, OnV
 		userCar = new Car(userCarLeftBitmap, userCarRightBitmap, userCarUpBitmap, userCarDownBitmap, w, h, this, track, false);
 		computerCar = new Car(computerCarLeftBitmap, computerCarRightBitmap, computerCarUpBitmap, computerCarDownBitmap, w, h, this, track, true);
 		userCar.setCarDefaultSpeed(userSpeed);
-		computerCar.setCarDefaultSpeed(referenceSpeed / speedLevelCoef);
+		computerCar.setCarDefaultSpeed(referenceSpeed * speedLevelCoef);
 	}
 
 	private void initializeRoads(Resources res) {
@@ -189,8 +189,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, OnV
 						final Resources res = getContext().getResources();
 						initializeCars(res);
 						initializeRoads(res);
-						computerCar.setViewWidth(width);
-						userCar.setViewWidth(width);
 						userCar.setImpulseAmplitude(pulseAmplitude);
 						isFirstDraw = false;
 					}
