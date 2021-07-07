@@ -60,7 +60,7 @@ public class Car {
 
 	public final void setCarVelocity(double deltaTime) {
 		if (isRunning) {
-			double defVelocity = defaultVelocity * w / 100f;
+			double defVelocity = defaultVelocity * w / 225f;
 			velocity = (defVelocity + defVelocity * impulsePercent) * deltaTime / 17;
 			lostDistance += velocity - (int) velocity;
 			isLostDistance = lostDistance >= 1.0;
