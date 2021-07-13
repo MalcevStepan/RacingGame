@@ -25,6 +25,7 @@
         <entry key="app/src/main/res/drawable/turquoise_car_down.xml" value="0.2515625" />
         <entry key="app/src/main/res/drawable/turquoise_car_left.xml" value="0.20092592592592592" />
         <entry key="app/src/main/res/drawable/turquoise_car_right.xml" value="0.20092592592592592" />
+        <entry key="app/src/main/res/layout/activity_game.xml" value="0.16983695652173914" />
       </map>
     </option>
   </component>
