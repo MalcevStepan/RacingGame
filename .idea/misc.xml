@@ -12,10 +12,12 @@
         <entry key="app/src/main/res/drawable/edit_text_bg.xml" value="0.2515625" />
         <entry key="app/src/main/res/drawable/finish.xml" value="0.2111111111111111" />
         <entry key="app/src/main/res/drawable/finish_90.xml" value="0.2111111111111111" />
+        <entry key="app/src/main/res/drawable/forward_arrow.xml" value="0.17592592592592593" />
         <entry key="app/src/main/res/drawable/purple_car_down.xml" value="0.20092592592592592" />
         <entry key="app/src/main/res/drawable/purple_car_left.xml" value="0.20092592592592592" />
         <entry key="app/src/main/res/drawable/purple_car_right.xml" value="0.20092592592592592" />
         <entry key="app/src/main/res/drawable/purple_car_up.xml" value="0.20092592592592592" />
+        <entry key="app/src/main/res/drawable/settings_arrow.xml" value="0.17592592592592593" />
         <entry key="app/src/main/res/drawable/switch_track.xml" value="0.2111111111111111" />
         <entry key="app/src/main/res/drawable/switch_track_background.xml" value="0.2111111111111111" />
         <entry key="app/src/main/res/drawable/turn_left_bottom.xml" value="0.1712962962962963" />
@@ -25,6 +27,7 @@
         <entry key="app/src/main/res/drawable/turquoise_car_down.xml" value="0.2515625" />
         <entry key="app/src/main/res/drawable/turquoise_car_left.xml" value="0.20092592592592592" />
         <entry key="app/src/main/res/drawable/turquoise_car_right.xml" value="0.20092592592592592" />
+        <entry key="app/src/main/res/drawable/update.xml" value="0.17592592592592593" />
         <entry key="app/src/main/res/layout/activity_game.xml" value="0.16983695652173914" />
       </map>
     </option>
